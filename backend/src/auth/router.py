@@ -1,6 +1,6 @@
 from flask import Blueprint, make_response, request, Request, abort, Response
 from src.auth.orm import UsersORM
-from src.auth.dependencies import get_access_token, get_refresh_token
+from src.auth.dependencies import get_access_token, get_refresh_token, get_user_id
 from src.auth.AuthJWT import security
 from re import search
 
@@ -119,8 +119,11 @@ async def update_refresh_token():
 
 @blueprint.route("/is-auth", methods=["POST"])
 async def is_auth_user():
+    user_id = await get_user_id(request)
+    user = await UsersORM.get_user_by_id(user_id)
     json = {
-        "auth": await check_user_auth(request)
+        "auth": await check_user_auth(request),
+        "user": user
     }
     return json
 
