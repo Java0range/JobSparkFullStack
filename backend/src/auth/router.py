@@ -55,6 +55,20 @@ async def registration():
     create_user_ans = await UsersORM.insert_user(username=username, password=password)
     if "Ошибка" in create_user_ans:
         abort(Response(create_user_ans, 406))
+    res = make_response(create_user_ans)
+    res.set_cookie(
+        key="access_token",
+        value=security.create_access_token(user_id=create_user_ans["id"]),
+        httponly=True,
+        max_age=1800
+    )
+    res.set_cookie(
+        key="refresh_token",
+        value=security.create_refresh_token(user_id=create_user_ans["id"]),
+        httponly=True,
+        max_age=604800
+    )
+    return res
 
 
 @blueprint.route("/login", methods=["POST"])
@@ -65,7 +79,8 @@ async def login_user():
     user_id = await UsersORM.verify(username=username, password=password)
     if user_id is False:
         abort(Response("Неверный username или пароль", 401))
-    res = make_response()
+    user = await UsersORM.get_user_by_id(user_id)
+    res = make_response(user)
     res.set_cookie(
         key="access_token",
         value=security.create_access_token(user_id=user_id),

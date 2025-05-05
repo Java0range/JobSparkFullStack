@@ -50,7 +50,7 @@ class UsersORM:
                 user = UserModel(username=username, password=hashed_password)
                 session.add(user)
                 await session.commit()
-                return "Ok"
+                return UserResponseSchema.model_validate(user, from_attributes=True).model_dump()
             else:
                 return "Ошибка: Данный username уже занят"
 
@@ -60,9 +60,18 @@ class UsersORM:
             query = select(UserModel).order_by(UserModel.id)
             users = await session.execute(query)
             users = users.scalars().all()
-            result_dto = [UserResponseSchema.model_validate(row, from_attributes=True) for row in users]
-            result_dto = [UserResponseSchema.model_dump(user) for user in result_dto]
+            result_dto = [UserResponseSchema.model_validate(row, from_attributes=True).model_dump() for row in users]
             return result_dto
+
+    @staticmethod
+    async def get_user_by_id(user_id: int):
+        async with async_session_factory() as session:
+            user = await session.get(UserModel, user_id)
+            if user:
+                user = UserResponseSchema.model_validate(user, from_attributes=True).model_dump()
+                print(user)
+                return user
+
 
 
     @staticmethod
