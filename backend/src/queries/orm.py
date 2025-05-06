@@ -1,5 +1,6 @@
 from src.database.database import async_engine, BaseModel, async_session_factory
 from src.auth.orm import UsersORM
+from src.resumes.orm import ResumeORM
 from src.auth.models import UserModel
 
 
@@ -13,3 +14,22 @@ class AsyncORM:
     @staticmethod
     async def insert_root():
         await UsersORM.insert_user(username='root', password='toor')
+
+    @staticmethod
+    async def insert_resume():
+        await ResumeORM.insert_resume(
+            name="Root",
+            surname="Toor",
+            job_name="Backend Developer",
+            experience=2,
+            expected_salary=80_000,
+            city="Москва"
+        )
+        await ResumeORM.insert_resume(
+            name="Root",
+            surname="Toor",
+            job_name="Backend Developer",
+            experience=2,
+            expected_salary=80_000,
+            city="London"
+        )
