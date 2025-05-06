@@ -11,10 +11,10 @@ async def main():
 
 
 app = Flask(__name__)
+CORS(app, supports_credentials=True, origins=["http://localhost:5173"])
 app.register_blueprint(auth_blueprint)
-CORS(app, resources={r"/*": {"origins": "http://localhost:5173"}})
 
 
 if __name__ == '__main__':
     run(main())
-    app.run(debug=True)
+    app.run(debug=True, host='localhost', port=5000)

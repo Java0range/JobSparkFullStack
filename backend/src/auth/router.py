@@ -1,4 +1,5 @@
 from flask import Blueprint, make_response, request, Request, abort, Response
+from flask_cors import CORS
 from src.auth.orm import UsersORM
 from src.auth.dependencies import get_access_token, get_refresh_token, get_user_id
 from src.auth.AuthJWT import security
@@ -41,6 +42,32 @@ async def check_user_auth(request_cookies: Request):
     return True
 
 
+@blueprint.route("/login", methods=["POST"])
+async def login_user():
+    data = request.json
+    username = data.get('username')
+    password = data.get('password')
+    user_id = await UsersORM.verify(username=username, password=password)
+    if user_id is False:
+        abort(Response("Неверный username или пароль", 401))
+    user = await UsersORM.get_user_by_id(user_id)
+    res = make_response(user)
+    res.set_cookie(
+        key="access_token",
+        value=security.create_access_token(user_id=user_id),
+        httponly=True,
+        max_age=1800
+    )
+    res.set_cookie(
+        key="refresh_token",
+        value=security.create_refresh_token(user_id=user_id),
+        httponly=True,
+        max_age=604800
+    )
+    return res
+
+
+
 @blueprint.route("/registration", methods=["POST"])
 async def registration():
     data = request.json
@@ -65,31 +92,6 @@ async def registration():
     res.set_cookie(
         key="refresh_token",
         value=security.create_refresh_token(user_id=create_user_ans["id"]),
-        httponly=True,
-        max_age=604800
-    )
-    return res
-
-
-@blueprint.route("/login", methods=["POST"])
-async def login_user():
-    data = request.json
-    username = data.get('username')
-    password = data.get('password')
-    user_id = await UsersORM.verify(username=username, password=password)
-    if user_id is False:
-        abort(Response("Неверный username или пароль", 401))
-    user = await UsersORM.get_user_by_id(user_id)
-    res = make_response(user)
-    res.set_cookie(
-        key="access_token",
-        value=security.create_access_token(user_id=user_id),
-        httponly=True,
-        max_age=1800
-    )
-    res.set_cookie(
-        key="refresh_token",
-        value=security.create_refresh_token(user_id=user_id),
         httponly=True,
         max_age=604800
     )
