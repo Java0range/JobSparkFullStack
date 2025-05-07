@@ -9,6 +9,7 @@ class ResumesModel(BaseModel):
     name: Mapped[str]
     surname: Mapped[str]
     job_name: Mapped[str]
+    description: Mapped[str]
     education: Mapped[str]
     educational_institution: Mapped[str]
     faculty: Mapped[str]

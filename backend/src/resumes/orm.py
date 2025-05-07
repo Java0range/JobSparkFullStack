@@ -1,4 +1,4 @@
-from sqlalchemy import select
+from sqlalchemy import select, func
 from src.resumes.models import ResumesModel
 from src.database.database import async_session_factory
 from src.resumes.schemas import ResumesRespSchema
@@ -7,6 +7,7 @@ from src.resumes.schemas import ResumesRespSchema
 class ResumeORM:
     @staticmethod
     async def get_resumes_for_filter(
+            words_list: list,
             experience_from: int = 0,
             expected_salary_from: int = 0,
             expected_salary_to: int = 1_000_000_000,
@@ -19,6 +20,10 @@ class ResumeORM:
                      .filter(ResumesModel.expected_salary <= expected_salary_to)
                      .filter(ResumesModel.city.like(f"%{city}%"))
                      )
+            if words_list:
+                vector = func.to_tsvector("russian", ResumesModel.job_name + " " + ResumesModel.description)
+                vector_query = func.plainto_tsquery("russian", " ".join(words_list))
+                query = query.filter(vector.op('@@')(vector_query))
             resumes = await session.execute(query)
             resumes = resumes.scalars().all()
             result_dto = [ResumesRespSchema.model_validate(row, from_attributes=True).model_dump() for row in resumes]
@@ -29,6 +34,7 @@ class ResumeORM:
             name: str,
             surname: str,
             job_name: str,
+            description: str,
             experience: int,
             education: str,
             educational_institution: str,
@@ -41,6 +47,7 @@ class ResumeORM:
                 name=name,
                 surname=surname,
                 job_name=job_name,
+                description=description,
                 education=education,
                 educational_institution=educational_institution,
                 faculty=faculty,

@@ -6,6 +6,7 @@ class ResumesRespSchema(BaseModel):
     name: str
     surname: str
     job_name: str
+    description: str
     education: str
     educational_institution: str
     faculty: str
