@@ -30,6 +30,9 @@ class ResumeORM:
             surname: str,
             job_name: str,
             experience: int,
+            education: str,
+            educational_institution: str,
+            faculty: str,
             expected_salary: int,
             city: str
     ):
@@ -38,6 +41,9 @@ class ResumeORM:
                 name=name,
                 surname=surname,
                 job_name=job_name,
+                education=education,
+                educational_institution=educational_institution,
+                faculty=faculty,
                 experience=experience,
                 expected_salary=expected_salary,
                 city=city

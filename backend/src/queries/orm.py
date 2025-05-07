@@ -16,19 +16,25 @@ class AsyncORM:
         await UsersORM.insert_user(username='root', password='toor')
 
     @staticmethod
-    async def insert_resume():
+    async def insert_resumes():
         await ResumeORM.insert_resume(
             name="Root",
             surname="Toor",
             job_name="Backend Developer",
+            education="Высшее",
+            educational_institution="МГУ",
+            faculty="ФКН",
             experience=2,
-            expected_salary=80_000,
+            expected_salary=200_000,
             city="Москва"
         )
         await ResumeORM.insert_resume(
             name="Root",
             surname="Toor",
             job_name="Backend Developer",
+            education="Высшее",
+            educational_institution="ВГУ",
+            faculty="ПММ",
             experience=2,
             expected_salary=80_000,
             city="London"

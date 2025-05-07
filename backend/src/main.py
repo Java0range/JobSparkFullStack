@@ -9,7 +9,7 @@ from src.queries.orm import AsyncORM
 async def main():
     await AsyncORM.create_tables()
     await AsyncORM.insert_root()
-    await AsyncORM.insert_resume()
+    await AsyncORM.insert_resumes()
 
 
 app = Flask(__name__)
