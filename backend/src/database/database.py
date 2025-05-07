@@ -5,7 +5,7 @@ from src.config import settings
 
 
 async_engine = create_async_engine(
-    url="sqlite+aiosqlite:///database.db",
+    url=settings.DATABASE_URL_asyncpg,
     echo=True
 )
 

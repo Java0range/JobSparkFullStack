@@ -20,7 +20,7 @@ class AsyncORM:
         await ResumeORM.insert_resume(
             name="Root",
             surname="Toor",
-            job_name="Backend Developer",
+            job_name="Python Backend Developer",
             education="Высшее",
             educational_institution="МГУ",
             faculty="ФКН",
@@ -31,7 +31,7 @@ class AsyncORM:
         await ResumeORM.insert_resume(
             name="Root",
             surname="Toor",
-            job_name="Backend Developer",
+            job_name="FastApi Backend Developer",
             education="Высшее",
             educational_institution="ВГУ",
             faculty="ПММ",
