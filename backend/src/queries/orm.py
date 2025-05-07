@@ -1,7 +1,8 @@
-from src.database.database import async_engine, BaseModel, async_session_factory
+from src.database.database import async_engine, BaseModel
 from src.auth.orm import UsersORM
 from src.resumes.orm import ResumeORM
-from src.auth.models import UserModel
+from src.employers.orm import EmployersORM
+
 
 
 class AsyncORM:
@@ -40,4 +41,29 @@ class AsyncORM:
             experience=2,
             expected_salary=80_000,
             city="London"
+        )
+
+    @staticmethod
+    async def insert_employers():
+        await EmployersORM.insert_employer(
+            name="Python Backend Developer",
+            salary=350_000,
+            work_experience=3,
+            remotely=True,
+            description="Нам нужен fastapi backend developer",
+            phone_number="89777777777",
+            email="obmanaNet@main.ru",
+            telegram_username="",
+            city="Москва"
+        )
+        await EmployersORM.insert_employer(
+            name="Backend Developer",
+            salary=80_000,
+            work_experience=3,
+            remotely=True,
+            description="Нам нужен python backend developer",
+            phone_number="89777777777",
+            email="razwodka@main.ru",
+            telegram_username="@razwodka",
+            city="Воронеж"
         )
