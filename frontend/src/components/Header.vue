@@ -44,8 +44,8 @@ watch(activeView, () => {
       </select>
     </div>
     <div>
-      <button @click="logout" class="min-w-36 max-sm:min-w-12 bg-sky-500 hover:bg-sky-400 text-white font-bold py-2 px-4 rounded-full transition-all">
-        Выход
+      <button class="min-w-36 max-sm:min-w-12 bg-sky-500 hover:bg-sky-400 text-white font-bold py-2 px-4 rounded-full transition-all">
+        Профиль
       </button>
     </div>
   </div>
