@@ -47,6 +47,7 @@ class AsyncORM:
     async def insert_employers():
         await EmployersORM.insert_employer(
             name="Python Backend Developer",
+            user_id=1,
             salary=350_000,
             work_experience=3,
             remotely=True,
@@ -58,6 +59,7 @@ class AsyncORM:
         )
         await EmployersORM.insert_employer(
             name="Backend Developer",
+            user_id=1,
             salary=80_000,
             work_experience=3,
             remotely=True,

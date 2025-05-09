@@ -1,4 +1,5 @@
 from sqlalchemy import select, func
+from sqlalchemy.orm import selectinload
 from src.employers.models import EmployerModel
 from src.database.database import async_session_factory
 from src.employers.schemas import EmployersRespSchema
@@ -12,15 +13,14 @@ class EmployersORM:
             remotely: bool = False,
             experience_from: int = 0,
             expected_salary_from: int = 0,
-            expected_salary_to: int = 1_000_000_000,
             city: str = ""
     ):
         async with async_session_factory() as session:
             query = (select(EmployerModel)
                      .filter(EmployerModel.work_experience >= experience_from)
                      .filter(EmployerModel.salary >= expected_salary_from)
-                     .filter(EmployerModel.salary <= expected_salary_to)
                      .filter(EmployerModel.city.like(f"%{city}%"))
+                     .options(selectinload(EmployerModel.user))
                      )
             if words_list:
                 vector = func.to_tsvector("russian", EmployerModel.name + " " + EmployerModel.description)
@@ -36,6 +36,7 @@ class EmployersORM:
     @staticmethod
     async def insert_employer(
             name: str,
+            user_id: int,
             salary: int,
             work_experience: int,
             remotely: bool,
@@ -48,6 +49,7 @@ class EmployersORM:
         async with async_session_factory() as session:
             employer = EmployerModel(
                 name=name,
+                user_id=user_id,
                 salary=salary,
                 work_experience=work_experience,
                 remotely=remotely,

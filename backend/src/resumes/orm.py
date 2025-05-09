@@ -10,14 +10,12 @@ class ResumeORM:
             words_list: list,
             experience_from: int = 0,
             expected_salary_from: int = 0,
-            expected_salary_to: int = 1_000_000_000,
             city: str = ""
     ):
         async with async_session_factory() as session:
             query = (select(ResumesModel)
                      .filter(ResumesModel.experience >= experience_from)
                      .filter(ResumesModel.expected_salary >= expected_salary_from)
-                     .filter(ResumesModel.expected_salary <= expected_salary_to)
                      .filter(ResumesModel.city.like(f"%{city}%"))
                      )
             if words_list:

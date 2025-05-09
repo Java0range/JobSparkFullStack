@@ -1,5 +1,5 @@
-from pydantic import BaseModel
 from src.auth.schemas import UserResponseSchema
+from pydantic import BaseModel
 
 
 class EmployersRespSchema(BaseModel):
