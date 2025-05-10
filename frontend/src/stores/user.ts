@@ -4,5 +4,11 @@ import type { UserResponse } from '@/models/UserResponse.ts'
 
 export const useUserStore = defineStore('user', () => {
   const userInfo = ref<UserResponse | null>(null)
-  return { userInfo }
+  const logout = () => {
+    userInfo.value = null
+  }
+  const getUsername = () => {
+    return userInfo.value?.username || ''
+  }
+  return { userInfo, logout, getUsername }
 })

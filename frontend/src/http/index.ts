@@ -1,4 +1,4 @@
-import axios from "axios";
+import axios, { type AxiosResponse } from 'axios'
 
 const baseURL = "http://localhost:5000";
 
@@ -7,6 +7,23 @@ const $api = axios.create({
   baseURL: baseURL,
 })
 
-// sfdsfsdf
+$api.interceptors.response.use((config) => {
+  return config;
+}, async (error) => {
+  const originalRequest = error.config;
+  if (error.response.status === 401 &&
+    error.response.data == "Invalid access token" &&
+    error.response.data == "Error: Invalid access token" &&
+    error.config && !error.config._isRetry) {
+    originalRequest._isRetry = true;
+    try {
+      await $api.post<AxiosResponse>("/users/refresh");
+      return $api.request(originalRequest);
+    } catch (err) {
+      console.log(err);
+    }
+  }
+  throw error;
+})
 
 export default $api;
