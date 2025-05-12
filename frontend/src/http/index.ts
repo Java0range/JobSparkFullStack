@@ -12,8 +12,8 @@ $api.interceptors.response.use((config) => {
 }, async (error) => {
   const originalRequest = error.config;
   if (error.response.status === 401 &&
-    error.response.data == "Invalid access token" &&
-    error.response.data == "Error: Invalid access token" &&
+    (error.response.data == "Invalid access token" ||
+    error.response.data == "Error: Invalid access token") &&
     error.config && !error.config._isRetry) {
     originalRequest._isRetry = true;
     try {

@@ -1,21 +1,63 @@
 <script setup lang="ts">
 import DescriptionInput from '@/components/DescriptionInput.vue'
 import { ref } from 'vue'
+import ResumeService from '@/services/ResumeService.ts'
 
 const props = defineProps<{
   closeDrawer: () => void
 }>();
 
-const description = ref<string>("");
-
 const resumeCreateSteps = ref<number>(1);
 
+const name = ref<string>("");
+
+const surname = ref<string>("");
+
+const job_name = ref<string>("");
+
+const description = ref<string>("");
+
+const education = ref<string>("Среднее");
+
+const educational_institution = ref<string>("");
+
+const faculty = ref<string>("");
 
 const experience = ref<number>(0);
 
+const expected_salary = ref<number>(0);
+
+const city = ref<string>("Не указано");
+
+const phone_number = ref<string>("");
+
+const email = ref<string>("");
+
+const telegram_username = ref<string>("");
+
+const createResumeDisable = ref<boolean>(false);
+
 
 const createResume = async () => {
-
+  const json = {
+    name: name.value,
+    surname: surname.value,
+    job_name: job_name.value,
+    description: description.value,
+    education: education.value,
+    edu_institution: educational_institution.value,
+    faculty: faculty.value,
+    experience: experience.value,
+    expected_salary: expected_salary.value,
+    city: city.value,
+    phone_number: phone_number.value,
+    email: email.value,
+    telegram_username: telegram_username.value
+  }
+  createResumeDisable.value = true;
+  await ResumeService.createResume(json);
+  createResumeDisable.value = false;
+  props.closeDrawer();
 }
 </script>
 
@@ -28,17 +70,17 @@ const createResume = async () => {
       <div class="flex items-center justify-between gap-3 w-full">
         <div class="mb-5">
           <label class="block mb-2 text-sm font-medium text-black">Имя:</label>
-          <input type="text" class="bg-gray-50 border-2 border-gray-300 text-black text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
+          <input v-model="name" type="text" class="bg-gray-50 border-2 border-gray-300 text-black text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
         </div>
         <div class="mb-5">
           <label class="block mb-2 text-sm font-medium text-black">Фамилия:</label>
-          <input type="text" class="bg-gray-50 border-2 border-gray-300 text-black text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
+          <input v-model="surname" type="text" class="bg-gray-50 border-2 border-gray-300 text-black text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
         </div>
       </div>
       <div class="flex items-center justify-between gap-3 w-full">
         <div class="mb-5">
           <label class="block mb-2 text-sm font-medium text-black">Профессия:</label>
-          <input type="text" class="bg-gray-50 border-2 border-gray-300 text-black text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
+          <input v-model="job_name" type="text" class="bg-gray-50 border-2 border-gray-300 text-black text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
         </div>
         <div class="flex flex-col w-1/2">
           <div class="flex items-center justify-start w-full">
@@ -54,8 +96,8 @@ const createResume = async () => {
     <div v-if="resumeCreateSteps == 3">
       <div class="mb-5">
         <label class="block mb-2 text-sm font-medium text-black">Образование:</label>
-        <select class="border-2 text-sm rounded-lg block w-full p-2.5 bg-white border-gray-200 placeholder-gray-400 text-black focus:ring-sky-500 focus:border-sky-500">
-          <option selected>Среднее</option>
+        <select v-model="education" class="border-2 text-sm rounded-lg block w-full p-2.5 bg-white border-gray-200 placeholder-gray-400 text-black focus:ring-sky-500 focus:border-sky-500">
+          <option>Среднее</option>
           <option>Среднее Проф.</option>
           <option>Высшее</option>
         </select>
@@ -63,13 +105,13 @@ const createResume = async () => {
       <div>
         <div class="mb-5">
           <label class="block mb-2 text-sm font-medium text-black">Учебное заведение:</label>
-          <input type="text" class="bg-gray-50 border-2 border-gray-300 text-black text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
+          <input v-model="educational_institution" type="text" class="bg-gray-50 border-2 border-gray-300 text-black text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
         </div>
       </div>
       <div>
-        <div class="mb-5">
+        <div v-if="education != 'Среднее'" class="mb-5">
           <label class="block mb-2 text-sm font-medium text-black">Факультет:</label>
-          <input type="text" class="bg-gray-50 border-2 border-gray-300 text-black text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
+          <input v-model="faculty" type="text" class="bg-gray-50 border-2 border-gray-300 text-black text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
         </div>
       </div>
       <div class="flex items-center justify-between w-full gap-3 mb-3">
@@ -77,8 +119,8 @@ const createResume = async () => {
           <div class="flex items-center justify-start w-full">
             <label for="countries" class="block mb-2 text-sm font-medium text-black">Город:</label>
           </div>
-          <select class="border-2 text-sm rounded-lg block w-full p-2.5 bg-white border-gray-200 placeholder-gray-400 text-black focus:ring-sky-500 focus:border-sky-500">
-            <option selected>Не указано</option>
+          <select v-model="city" class="border-2 text-sm rounded-lg block w-full p-2.5 bg-white border-gray-200 placeholder-gray-400 text-black focus:ring-sky-500 focus:border-sky-500">
+            <option>Не указано</option>
             <option>Москва</option>
             <option>Санкт-Петербург</option>
             <option>Владивосток</option>
@@ -125,13 +167,31 @@ const createResume = async () => {
           <div class="flex items-center justify-start w-full">
             <label class="block mb-2 text-sm font-medium text-black">Уровень дохода от:</label>
           </div>
-          <input type="number" aria-describedby="helper-text-explanation" class="bg-gray-50 border-2 border-gray-200 text-gray-900 text-sm rounded-lg focus:ring-sky-500 focus:border-sky-500 block w-full p-2.5" placeholder="100000" required />
+          <input v-model="expected_salary" type="number" aria-describedby="helper-text-explanation" class="bg-gray-50 border-2 border-gray-200 text-gray-900 text-sm rounded-lg focus:ring-sky-500 focus:border-sky-500 block w-full p-2.5" placeholder="100000" required />
+        </div>
+      </div>
+    </div>
+    <div v-if="resumeCreateSteps == 4">
+      <div class="flex items-center justify-between gap-3 w-full">
+        <div class="mb-5">
+          <label class="block mb-2 text-sm font-medium text-black">Email:</label>
+          <input v-model="email" type="text" class="bg-gray-50 border-2 border-gray-300 text-black text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
+        </div>
+        <div class="mb-5">
+          <label class="block mb-2 text-sm font-medium text-black">Номер Телефона:</label>
+          <input v-model="phone_number" type="text" class="bg-gray-50 border-2 border-gray-300 text-black text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
+        </div>
+      </div>
+      <div class="flex items-center justify-center w-full">
+        <div class="mb-5">
+          <label class="block mb-2 text-sm font-medium text-black">Telegram Username:</label>
+          <input v-model="telegram_username" type="text" class="bg-gray-50 border-2 border-gray-300 text-black text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
         </div>
       </div>
     </div>
     <div class="flex items-center justify-center w-full">
-      <button @click="resumeCreateSteps != 3 ? resumeCreateSteps += 1 : createResume" class="min-w-36 max-sm:min-w-12 bg-sky-500 hover:bg-sky-400 text-white font-bold py-2 px-4 rounded-xl transition-all">
-        {{ resumeCreateSteps != 3 ? "Дальше" : "Создать"}}
+      <button :disabled="createResumeDisable" @click="resumeCreateSteps != 4 ? resumeCreateSteps += 1 : createResume()" class="min-w-36 max-sm:min-w-12 bg-sky-500 hover:bg-sky-400 text-white font-bold py-2 px-4 rounded-xl transition-all">
+        {{ resumeCreateSteps != 4 ? "Дальше" : "Создать"}}
       </button>
     </div>
   </div>

@@ -4,7 +4,7 @@
       for="resumeDescription"
       class="block text-gray-700 text-sm font-bold mb-2"
     >
-      Краткое описание резюме
+      Краткое описание {{ desc_type == "resume" ? "резюме" : "вакансии" }}
     </label>
     <textarea
       name="resumeDescription"

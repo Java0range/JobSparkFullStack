@@ -42,7 +42,8 @@ onMounted(() => {
   <CreateEmployerDrawer v-if="createEmployerDrawer" :close-drawer="closeEmployerDrawer" />
   <div class="bg-white w-3/5 m-auto rounded-xl shadow-[0_0_25px_rgb(255,255,255)] shadow-sky-500 mt-20">
     <header class="flex justify-between border-b border-slate-200 px-10 py-8">
-      <div class="flex items-center gap-4">
+      <div class="flex items-center gap-2">
+        <img src="/user.svg" alt="user" class="h-8">
         <h2 class="font-bold text-xl">{{ username }}</h2>
       </div>
       <ul class="flex items-center gap-10">
