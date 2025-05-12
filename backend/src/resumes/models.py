@@ -16,3 +16,6 @@ class ResumesModel(BaseModel):
     experience: Mapped[int]
     expected_salary: Mapped[int]
     city: Mapped[str]
+    phone_number: Mapped[str]
+    email: Mapped[str]
+    telegram_username: Mapped[str]

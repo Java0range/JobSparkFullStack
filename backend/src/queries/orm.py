@@ -28,7 +28,10 @@ class AsyncORM:
             faculty="ФКН",
             experience=2,
             expected_salary=200_000,
-            city="Москва"
+            city="Москва",
+            phone_number="89003015099",
+            email="",
+            telegram_username="@username"
         )
         await ResumeORM.insert_resume(
             name="Root",
@@ -40,7 +43,10 @@ class AsyncORM:
             faculty="ПММ",
             experience=2,
             expected_salary=80_000,
-            city="London"
+            city="London",
+            phone_number="89004033340",
+            email="obmanaNet@main.ru",
+            telegram_username=""
         )
 
     @staticmethod
@@ -53,7 +59,7 @@ class AsyncORM:
             remotely=True,
             description="Нам нужен fastapi backend developer",
             phone_number="89777777777",
-            email="obmanaNet@main.ru",
+            email="obmanaNet@mail.ru",
             telegram_username="",
             city="Москва"
         )
@@ -65,7 +71,7 @@ class AsyncORM:
             remotely=True,
             description="Нам нужен python backend developer",
             phone_number="89777777777",
-            email="razwodka@main.ru",
+            email="razwodka@mail.ru",
             telegram_username="@razwodka",
             city="Воронеж"
         )

@@ -38,7 +38,10 @@ class ResumeORM:
             educational_institution: str,
             faculty: str,
             expected_salary: int,
-            city: str
+            city: str,
+            phone_number: str,
+            email: str,
+            telegram_username: str
     ):
         async with async_session_factory() as session:
             resume = ResumesModel(
@@ -51,7 +54,10 @@ class ResumeORM:
                 faculty=faculty,
                 experience=experience,
                 expected_salary=expected_salary,
-                city=city
+                city=city,
+                phone_number=phone_number,
+                email=email,
+                telegram_username=telegram_username
             )
             session.add(resume)
             await session.commit()
