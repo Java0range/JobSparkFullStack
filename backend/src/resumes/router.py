@@ -1,5 +1,7 @@
-from flask import Blueprint, request
+from flask import Blueprint, request, abort, Response
 from src.resumes.orm import ResumeORM
+from src.resumes.schemas import CreateResumeSchema
+from src.auth.dependencies import get_user_id
 
 
 blueprint = Blueprint("Resumes", __name__, url_prefix="/resumes")
@@ -18,3 +20,36 @@ async def get_resumes():
         expected_salary_from=salary_from
     )
     return resumes
+
+
+@blueprint.route("", methods=["POST"])
+async def create_resume():
+    data = request.json
+    input_json = CreateResumeSchema.model_validate(data)
+    user_id = await get_user_id(request)
+    if not user_id:
+        abort(Response("Invalid user id", 406))
+    if (input_json.name
+        and input_json.surname
+        and input_json.job_name
+        and input_json.education
+        and input_json.edu_institution
+        and input_json.city
+    ):
+        await ResumeORM.insert_resume(
+            name=input_json.name,
+            surname=input_json.surname,
+            job_name=input_json.job_name,
+            description=input_json.description,
+            education=input_json.education,
+            experience=input_json.experience,
+            educational_institution=input_json.edu_institution,
+            faculty=input_json.faculty,
+            expected_salary=input_json.expected_salary,
+            city=input_json.city,
+            phone_number=input_json.phone_number,
+            email=input_json.email,
+            telegram_username=input_json.telegram_username
+        )
+        return "ok"
+    return abort(Response("Bad request", 400))
