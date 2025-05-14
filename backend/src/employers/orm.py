@@ -34,6 +34,18 @@ class EmployersORM:
             return result_dto
 
     @staticmethod
+    async def get_employer_for_id(employer_id: int):
+        async with async_session_factory() as session:
+            query = (select(EmployerModel)
+                     .options(selectinload(EmployerModel.user))
+                     .filter(EmployerModel.id == employer_id)
+            )
+            employer = await session.execute(query)
+            employer = employer.scalars().all()
+            result_dto = EmployersRespSchema.model_validate(employer[0], from_attributes=True).model_dump()
+            return result_dto
+
+    @staticmethod
     async def insert_employer(
             name: str,
             user_id: int,

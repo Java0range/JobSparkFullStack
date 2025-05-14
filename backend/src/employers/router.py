@@ -24,6 +24,14 @@ async def get_employers():
     return employers
 
 
+@blueprint.route("/<employer_id>", methods=["GET"])
+async def get_employer_by_id(employer_id: int):
+    employer_id = int(employer_id)
+    if employer_id and employer_id > 0:
+        return await EmployersORM.get_employer_for_id(employer_id=employer_id)
+    abort(Response("Bad request", 406))
+
+
 @blueprint.route("", methods=["POST"])
 async def create_employer():
     data = request.json
