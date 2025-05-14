@@ -19,6 +19,7 @@ class AsyncORM:
     @staticmethod
     async def insert_resumes():
         await ResumeORM.insert_resume(
+            user_id=1,
             name="Root",
             surname="Toor",
             job_name="Python Backend Developer",
@@ -34,6 +35,7 @@ class AsyncORM:
             telegram_username="@username"
         )
         await ResumeORM.insert_resume(
+            user_id=1,
             name="Root",
             surname="Toor",
             job_name="FastApi Backend Developer",

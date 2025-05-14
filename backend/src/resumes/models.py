@@ -1,11 +1,13 @@
-from sqlalchemy.orm import Mapped
-from sqlalchemy.testing.schema import mapped_column
+from sqlalchemy import ForeignKey
+from sqlalchemy.orm import Mapped, mapped_column, relationship
+from src.auth.models import UserModel
 from src.database.database import BaseModel
 
 
 class ResumesModel(BaseModel):
     __tablename__ = 'resumes'
     id: Mapped[int] = mapped_column(primary_key=True)
+    user_id: Mapped[int] = mapped_column(ForeignKey('users.id', ondelete='CASCADE'))
     name: Mapped[str]
     surname: Mapped[str]
     job_name: Mapped[str]
@@ -19,3 +21,4 @@ class ResumesModel(BaseModel):
     phone_number: Mapped[str]
     email: Mapped[str]
     telegram_username: Mapped[str]
+    user: Mapped["UserModel"] = relationship()

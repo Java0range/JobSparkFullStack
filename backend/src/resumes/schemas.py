@@ -1,4 +1,5 @@
 from pydantic import BaseModel
+from src.auth.schemas import UserResponseSchema
 
 
 class ResumesRespSchema(BaseModel):
@@ -13,6 +14,10 @@ class ResumesRespSchema(BaseModel):
     experience: int
     expected_salary: int
     city: str
+    phone_number: str
+    email: str
+    telegram_username: str
+    user: UserResponseSchema
 
 
 class CreateResumeSchema(BaseModel):

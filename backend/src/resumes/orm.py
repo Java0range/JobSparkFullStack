@@ -1,4 +1,5 @@
 from sqlalchemy import select, func
+from sqlalchemy.orm import selectinload
 from src.resumes.models import ResumesModel
 from src.database.database import async_session_factory
 from src.resumes.schemas import ResumesRespSchema
@@ -17,6 +18,7 @@ class ResumeORM:
                      .filter(ResumesModel.experience >= experience_from)
                      .filter(ResumesModel.expected_salary >= expected_salary_from)
                      .filter(ResumesModel.city.like(f"%{city}%"))
+                     .options(selectinload(ResumesModel.user))
                      )
             if words_list:
                 vector = func.to_tsvector("russian", ResumesModel.job_name + " " + ResumesModel.description)
@@ -28,7 +30,20 @@ class ResumeORM:
             return result_dto
 
     @staticmethod
+    async def get_resumes_for_id(resume_id: int):
+        async with async_session_factory() as session:
+            query = (select(ResumesModel)
+                     .options(selectinload(ResumesModel.user))
+                     .filter(ResumesModel.id == resume_id)
+            )
+            resume = await session.execute(query)
+            resume = resume.scalars().all()
+            result_dto = ResumesRespSchema.model_validate(resume[0], from_attributes=True).model_dump()
+            return result_dto
+
+    @staticmethod
     async def insert_resume(
+            user_id: int,
             name: str,
             surname: str,
             job_name: str,
@@ -45,6 +60,7 @@ class ResumeORM:
     ):
         async with async_session_factory() as session:
             resume = ResumesModel(
+                user_id=user_id,
                 name=name,
                 surname=surname,
                 job_name=job_name,

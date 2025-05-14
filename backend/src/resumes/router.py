@@ -22,6 +22,14 @@ async def get_resumes():
     return resumes
 
 
+@blueprint.route("/<resume_id>", methods=["GET"])
+async def get_resume_by_id(resume_id: int):
+    resume_id = int(resume_id)
+    if resume_id and resume_id > 0:
+        return await ResumeORM.get_resumes_for_id(resume_id=resume_id)
+    abort(Response("Bad request", 406))
+
+
 @blueprint.route("", methods=["POST"])
 async def create_resume():
     data = request.json
@@ -52,4 +60,4 @@ async def create_resume():
             telegram_username=input_json.telegram_username
         )
         return "ok"
-    return abort(Response("Bad request", 400))
+    abort(Response("Bad request", 400))
