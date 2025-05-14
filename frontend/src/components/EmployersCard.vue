@@ -1,11 +1,14 @@
 <script setup lang="ts">
 import type { EmployersModel } from '@/models/EmployersModels.ts'
+import { useRouter } from 'vue-router'
 
 defineProps<{employerInfo: EmployersModel}>();
+
+const router = useRouter();
 </script>
 
 <template>
-  <div class="flex flex-col items-center justify-center rounded-2xl border-2 border-gray-300 p-5 hover:shadow-[0_0_20px_rgb(255,255,255)] shadow-sky-500 transition duration-310 w-full bg-white">
+  <div @click="router.push({ path: `/employer/${employerInfo.id}` })" class="flex flex-col items-center justify-center rounded-2xl border-2 border-gray-300 p-5 hover:shadow-[0_0_20px_rgb(255,255,255)] shadow-sky-500 transition duration-310 w-full bg-white">
     <div class="flex flex-col items-start w-full gap-2">
       <div class="flex items-center justify-between w-full gap-1">
         <h3 class="font-bold text-xl">{{ employerInfo.name }}</h3>

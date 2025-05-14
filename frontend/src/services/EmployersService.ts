@@ -48,4 +48,8 @@ export default class EmployersService {
   static async createEmployer(json: CreateEmployer): Promise<AxiosResponse<string>> {
     return $api.post<string>("/employers", json)
   }
+
+  static async fetchEmployer(id: string | string[]): Promise<AxiosResponse<EmployersModel>> {
+    return $api.get<EmployersModel>("/employers/" + id)
+  }
 }
