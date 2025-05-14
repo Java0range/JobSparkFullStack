@@ -72,7 +72,7 @@ onMounted(async () => {
               <p class="text-sm text-slate-600">{{ resume.experience > 0 ? `Стаж: ${resume.experience} г.` : "Без опыта"}}</p>
             </div>
             <div class="p-1 px-2 bg-slate-200 rounded-lg">
-              <p class="text-sm text-slate-600">{{ resume.expected_salary > 0 ? `От: ${resume.expected_salary} ₽.` : "Зп не указана"}}</p>
+              <p class="text-sm text-slate-600">{{ resume.expected_salary > 0 ? `От: ${resume.expected_salary} ₽` : "Зп не указана"}}</p>
             </div>
           </div>
           <div class="flex items-center justify-start gap-3 w-full mt-3">

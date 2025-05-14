@@ -63,7 +63,7 @@ onMounted(async () => {
               <p class="text-sm text-slate-600">{{ employer.work_experience > 0 ? `Стаж: ${employer.work_experience} г.` : "Без опыта"}}</p>
             </div>
             <div class="p-1 px-2 bg-slate-200 rounded-lg">
-              <p class="text-sm text-slate-600">{{ employer.salary > 0 ? `От: ${employer.salary} ₽.` : "Зп не указана"}}</p>
+              <p class="text-sm text-slate-600">{{ employer.salary > 0 ? `От: ${employer.salary} ₽` : "Зп не указана"}}</p>
             </div>
             <div v-if="employer.remotely" class="p-1 px-2 bg-slate-200 rounded-lg">
               <p class="text-sm text-slate-600">Можно удалённо</p>
