@@ -33,8 +33,6 @@ async def create_employer():
         abort(Response("Invalid user id", 406))
     if (
         input_json.name
-        and input_json.salary
-        and input_json.work_experience
         and input_json.city
     ):
         await EmployersORM.insert_employer(
