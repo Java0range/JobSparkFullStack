@@ -49,6 +49,11 @@ const routes: RouteRecordRaw[] = [
     component: () => import('../views/UserAccountPage.vue'),
     beforeEnter: checkAuth
   },
+  {
+    path: '/resume/:id',
+    name: 'ResumePage',
+    component: () => import('../views/ResumePage.vue')
+  }
 ]
 
 const router = createRouter({

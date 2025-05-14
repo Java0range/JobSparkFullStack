@@ -13,3 +13,15 @@ export interface EmployersModel {
   work_experience: number,
   user: UserResponse
 }
+
+export interface CreateEmployer {
+  name: string,
+  salary: number,
+  work_experience: number,
+  remotely: boolean,
+  description: string,
+  city: string,
+  phone_number: string,
+  email: string,
+  telegram_username: string
+}

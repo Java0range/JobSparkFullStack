@@ -1,21 +1,59 @@
 <script setup lang="ts">
 import DescriptionInput from '@/components/DescriptionInput.vue'
 import { ref } from 'vue'
+import EmployersService from '@/services/EmployersService.ts'
 
 const props = defineProps<{
   closeDrawer: () => void
 }>();
 
-const description = ref<string>("");
-
 const resumeCreateSteps = ref<number>(1);
 
+const name = ref<string>("");
+
+const salary = ref<number>(0);
 
 const experience = ref<number>(0);
 
+const remotely = ref<boolean>(false);
 
-const createResume = async () => {
+const description = ref<string>("");
 
+const city = ref<string>("Не указано");
+
+const phone_number = ref<string>("");
+
+const email = ref<string>("");
+
+const telegram_username = ref<string>("");
+
+const createEmployerDisable = ref<boolean>(false);
+
+
+const createEmployer = async () => {
+  const json = {
+    name: name.value,
+    salary: salary.value,
+    work_experience: Number(experience.value),
+    remotely: remotely.value,
+    description: description.value,
+    city: city.value,
+    phone_number: phone_number.value,
+    email: email.value,
+    telegram_username: telegram_username.value
+  }
+  createEmployerDisable.value = true;
+  try {
+    const data = await EmployersService.createEmployer(json);
+    if (data.data === "ok") {
+      createEmployerDisable.value = false;
+      props.closeDrawer();
+    }
+  } catch (err) {
+    createEmployerDisable.value = false;
+    props.closeDrawer();
+    console.error(err);
+  }
 }
 </script>
 
@@ -28,7 +66,7 @@ const createResume = async () => {
       <div class="flex items-center justify-between gap-3 w-full">
         <div class="mb-5">
           <label class="block mb-2 text-sm font-medium text-black">Вакансия:</label>
-          <input type="text" class="bg-gray-50 border-2 border-gray-300 text-black text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
+          <input v-model="name" type="text" class="bg-gray-50 border-2 border-gray-300 text-black text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
         </div>
         <div class="flex flex-col w-1/2">
           <div class="flex items-center justify-start w-full">
@@ -42,8 +80,8 @@ const createResume = async () => {
           <div class="flex items-center justify-start w-full">
             <label for="countries" class="block mb-2 text-sm font-medium text-black">Город:</label>
           </div>
-          <select class="border-2 text-sm rounded-lg block w-full p-2.5 bg-white border-gray-200 placeholder-gray-400 text-black focus:ring-sky-500 focus:border-sky-500">
-            <option selected>Не указано</option>
+          <select v-model="city" class="border-2 text-sm rounded-lg block w-full p-2.5 bg-white border-gray-200 placeholder-gray-400 text-black focus:ring-sky-500 focus:border-sky-500">
+            <option>Не указано</option>
             <option>Москва</option>
             <option>Санкт-Петербург</option>
             <option>Владивосток</option>
@@ -90,13 +128,13 @@ const createResume = async () => {
           <div class="flex items-center justify-start w-full">
             <label class="block mb-2 text-sm font-medium text-black">Уровень дохода от:</label>
           </div>
-          <input type="number" aria-describedby="helper-text-explanation" class="bg-gray-50 border-2 border-gray-200 text-gray-900 text-sm rounded-lg focus:ring-sky-500 focus:border-sky-500 block w-full p-2.5" placeholder="100000" required />
+          <input v-model="salary" type="number" aria-describedby="helper-text-explanation" class="bg-gray-50 border-2 border-gray-200 text-gray-900 text-sm rounded-lg focus:ring-sky-500 focus:border-sky-500 block w-full p-2.5" placeholder="100000" required />
         </div>
       </div>
       <div class="flex items-center justify-center w-full mt-1 mb-4">
         <div class="inline-flex items-center gap-2 justify-center w-full">
           <div class="relative inline-block w-11 h-5">
-            <input id="switch-component-on" type="checkbox" class="peer appearance-none w-11 h-5 bg-slate-200 rounded-full checked:bg-sky-500 cursor-pointer transition-colors duration-300" />
+            <input v-model="remotely" id="switch-component-on" type="checkbox" class="peer appearance-none w-11 h-5 bg-slate-200 rounded-full checked:bg-sky-500 cursor-pointer transition-colors duration-300" />
             <label for="switch-component-on" class="absolute top-0 left-0 w-5 h-5 bg-white rounded-full border border-slate-300 shadow-sm transition-transform duration-300 peer-checked:translate-x-6 peer-checked:border-sky-500 cursor-pointer">
             </label>
           </div>
@@ -111,22 +149,22 @@ const createResume = async () => {
       <div class="flex items-center justify-between gap-3 w-full">
         <div class="mb-5">
           <label class="block mb-2 text-sm font-medium text-black">Email:</label>
-          <input type="text" class="bg-gray-50 border-2 border-gray-300 text-black text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
+          <input v-model="email" type="text" class="bg-gray-50 border-2 border-gray-300 text-black text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
         </div>
         <div class="mb-5">
           <label class="block mb-2 text-sm font-medium text-black">Номер Телефона:</label>
-          <input type="text" class="bg-gray-50 border-2 border-gray-300 text-black text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
+          <input v-model="phone_number" type="text" class="bg-gray-50 border-2 border-gray-300 text-black text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
         </div>
       </div>
       <div class="flex items-center justify-center w-full">
         <div class="mb-5">
           <label class="block mb-2 text-sm font-medium text-black">Telegram Username:</label>
-          <input type="text" class="bg-gray-50 border-2 border-gray-300 text-black text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
+          <input v-model="telegram_username" type="text" class="bg-gray-50 border-2 border-gray-300 text-black text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
         </div>
       </div>
     </div>
     <div class="flex items-center justify-center w-full">
-      <button @click="resumeCreateSteps != 3 ? resumeCreateSteps += 1 : createResume" class="min-w-36 max-sm:min-w-12 bg-sky-500 hover:bg-sky-400 text-white font-bold py-2 px-4 rounded-xl transition-all">
+      <button @click="resumeCreateSteps != 3 ? resumeCreateSteps += 1 : createEmployer()" class="min-w-36 max-sm:min-w-12 bg-sky-500 hover:bg-sky-400 text-white font-bold py-2 px-4 rounded-xl transition-all">
         {{ resumeCreateSteps != 3 ? "Дальше" : "Создать"}}
       </button>
     </div>

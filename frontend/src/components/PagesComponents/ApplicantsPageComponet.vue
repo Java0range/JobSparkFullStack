@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { onMounted, ref } from 'vue'
-import type { EmployersModel } from '@/models/EmployersResponse.ts'
+import type { EmployersModel } from '@/models/EmployersModels.ts'
 import EmployersCardsList from '@/components/EmployersCardsList.vue'
 import EmployersService from '@/services/EmployersService.ts'
 

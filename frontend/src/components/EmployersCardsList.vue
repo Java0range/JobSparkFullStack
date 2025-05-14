@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { EmployersModel } from '@/models/EmployersResponse.ts'
+import type { EmployersModel } from '@/models/EmployersModels.ts'
 import EmployersCart from '@/components/EmployersCard.vue'
 
 defineProps<{employersInfoList: EmployersModel[]}>();

@@ -1,4 +1,4 @@
-import type { EmployersModel } from '@/models/EmployersResponse.ts'
+import type { CreateEmployer, EmployersModel } from '@/models/EmployersModels.ts'
 import type { AxiosResponse } from 'axios'
 import $api from '@/http'
 
@@ -43,5 +43,9 @@ export default class EmployersService {
       }
     }
     return $api.get<EmployersModel[]>("/employers" + filter)
+  }
+
+  static async createEmployer(json: CreateEmployer): Promise<AxiosResponse<string>> {
+    return $api.post<string>("/employers", json)
   }
 }

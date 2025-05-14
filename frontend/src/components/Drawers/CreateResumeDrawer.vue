@@ -47,7 +47,7 @@ const createResume = async () => {
     education: education.value,
     edu_institution: educational_institution.value,
     faculty: faculty.value,
-    experience: experience.value,
+    experience: Number(experience.value),
     expected_salary: expected_salary.value,
     city: city.value,
     phone_number: phone_number.value,
@@ -55,9 +55,17 @@ const createResume = async () => {
     telegram_username: telegram_username.value
   }
   createResumeDisable.value = true;
-  await ResumeService.createResume(json);
-  createResumeDisable.value = false;
-  props.closeDrawer();
+  try {
+    const data = await ResumeService.createResume(json);
+    if (data.data === "ok") {
+      createResumeDisable.value = false;
+      props.closeDrawer();
+    }
+  } catch (err) {
+    createResumeDisable.value = false;
+    props.closeDrawer();
+    console.error(err);
+  }
 }
 </script>
 
