@@ -1,14 +1,48 @@
 <script setup lang="ts">
+import type { UserResumeResponse } from '@/models/ResumeModels.ts'
+import type { UserEmployersModel } from '@/models/EmployersModels.ts'
 import { useUserStore } from '@/stores/user.ts'
 import { onMounted, ref } from 'vue'
 import { useRouter } from 'vue-router'
 import AuthService from '@/services/AuthService.ts'
 import CreateResumeDrawer from '@/components/Drawers/CreateResumeDrawer.vue'
 import CreateEmployerDrawer from '@/components/Drawers/CreateEmployerDrawer.vue'
+import UserEmployerCart from '@/components/UserEmployerCart.vue'
+import UserResumeCart from '@/components/UserResumeCart.vue'
 
 const userStore = useUserStore()
 
 const username = ref<string>("");
+
+const userResume = ref<UserResumeResponse>({
+  "city": "",
+  "description": "",
+  "education": "",
+  "educational_institution": "",
+  "email": "",
+  "expected_salary": 0,
+  "experience": 0,
+  "faculty": "",
+  "id": 0,
+  "job_name": "",
+  "name": "",
+  "phone_number": "",
+  "surname": "",
+  "telegram_username": ""
+});
+
+const userEmployer = ref<UserEmployersModel>({
+  "city": "",
+  "description": "",
+  "email": "",
+  "id": 0,
+  "name": "",
+  "phone_number": "",
+  "remotely": false,
+  "salary": 0,
+  "telegram_username": "",
+  "work_experience": 0
+});
 
 const router = useRouter();
 
@@ -33,6 +67,8 @@ const logout = async () => {
 onMounted(() => {
   console.log(userStore.userInfo)
   username.value = userStore.getUsername();
+  userResume.value = userStore.getUserResume();
+  userEmployer.value = userStore.getUserEmployer();
 })
 
 </script>
@@ -63,13 +99,15 @@ onMounted(() => {
     <div class="p-10">
       <div class="flex flex-col items-start mb-10">
         <h1 class="text-3xl font-bold mb-3">Резюме:</h1>
-        <button @click="createResumeDrawer = true" class="min-w-36 max-sm:min-w-12 bg-sky-500 hover:bg-sky-400 text-white font-bold py-2 px-4 rounded-xl transition-all">
+        <UserResumeCart v-if="userResume.id != 0" :user-resume="userResume" />
+        <button v-if="userResume.id === 0" @click="createResumeDrawer = true" class="min-w-36 max-sm:min-w-12 bg-sky-500 hover:bg-sky-400 text-white font-bold py-2 px-4 rounded-xl transition-all">
           Создать резюме
         </button>
       </div>
       <div class="flex flex-col items-start mb-10">
         <h1 class="text-3xl font-bold mb-3">Вакансия:</h1>
-        <button @click="createEmployerDrawer = true" class="min-w-36 max-sm:min-w-12 bg-sky-500 hover:bg-sky-400 text-white font-bold py-2 px-4 rounded-xl transition-all">
+        <UserEmployerCart v-if="userEmployer.id != 0" :user-employer="userEmployer" />
+        <button v-if="userEmployer.id === 0" @click="createEmployerDrawer = true" class="min-w-36 max-sm:min-w-12 bg-sky-500 hover:bg-sky-400 text-white font-bold py-2 px-4 rounded-xl transition-all">
           Создать вакансию
         </button>
       </div>

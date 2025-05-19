@@ -2,7 +2,9 @@
 import type { EmployersModel } from '@/models/EmployersModels.ts'
 import { useRouter } from 'vue-router'
 
-defineProps<{employerInfo: EmployersModel}>();
+defineProps<{
+  employerInfo: EmployersModel
+}>();
 
 const router = useRouter();
 </script>

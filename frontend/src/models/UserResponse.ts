@@ -1,4 +1,10 @@
+import type { UserResumeResponse } from '@/models/ResumeModels.ts'
+import type { UserEmployersModel } from '@/models/EmployersModels.ts'
+
+
 export interface UserResponse {
   id: number,
-  username: string
+  username: string,
+  resume: UserResumeResponse,
+  employer: UserEmployersModel
 }

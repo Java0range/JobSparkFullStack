@@ -14,6 +14,21 @@ export interface EmployersModel {
   user: UserResponse
 }
 
+
+export interface UserEmployersModel {
+  city: string,
+  description: string,
+  email: string,
+  id: number,
+  name: string,
+  phone_number: string,
+  remotely: boolean,
+  salary: number,
+  telegram_username: string,
+  work_experience: number
+}
+
+
 export interface CreateEmployer {
   name: string,
   salary: number,

@@ -10,5 +10,11 @@ export const useUserStore = defineStore('user', () => {
   const getUsername = () => {
     return userInfo.value?.username || ''
   }
-  return { userInfo, logout, getUsername }
+  const getUserResume = () => {
+    return userInfo.value?.resume
+  }
+  const getUserEmployer = () => {
+    return userInfo.value?.employer
+  }
+  return { userInfo, logout, getUsername, getUserResume, getUserEmployer }
 })

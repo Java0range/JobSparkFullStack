@@ -2,7 +2,9 @@
 import type { ResumeResponse } from '@/models/ResumeModels.ts'
 import { useRouter } from 'vue-router'
 
-defineProps<{resumeInfo: ResumeResponse}>();
+defineProps<{
+  resumeInfo: ResumeResponse
+}>();
 
 const router = useRouter()
 

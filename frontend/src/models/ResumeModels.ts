@@ -19,6 +19,24 @@ export interface ResumeResponse {
 }
 
 
+export interface UserResumeResponse {
+  id: number,
+  name: string,
+  surname: string,
+  job_name: string,
+  description: string,
+  education: string,
+  educational_institution: string,
+  faculty: string,
+  experience: number,
+  expected_salary: number,
+  city: string,
+  phone_number: string,
+  email: string,
+  telegram_username: string
+}
+
+
 export interface CreateResume {
   city: string,
   description: string,
