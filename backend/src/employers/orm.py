@@ -2,7 +2,7 @@ from sqlalchemy import select, func
 from sqlalchemy.orm import selectinload
 from src.employers.models import EmployerModel
 from src.database.database import async_session_factory
-from src.employers.schemas import EmployersRespSchema
+from src.schemas.schemas import EmployersRespSchema
 
 
 

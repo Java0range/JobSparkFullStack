@@ -1,6 +1,7 @@
 from sqlalchemy import select
+from sqlalchemy.orm import selectinload
 from src.auth.models import UserModel
-from src.auth.schemas import UserResponseSchema
+from src.schemas.schemas import UserResponseSchema
 from src.database.database import async_session_factory
 from dataclasses import dataclass
 import bcrypt
@@ -66,10 +67,15 @@ class UsersORM:
     @staticmethod
     async def get_user_by_id(user_id: int):
         async with async_session_factory() as session:
-            user = await session.get(UserModel, user_id)
+            query = (select(UserModel)
+                     .filter_by(id=user_id)
+                     .options(selectinload(UserModel.resume))
+                     .options(selectinload(UserModel.employer))
+                     )
+            user = await session.execute(query)
+            user = user.scalars().first()
             if user:
                 user = UserResponseSchema.model_validate(user, from_attributes=True).model_dump()
-                print(user)
                 return user
 
 

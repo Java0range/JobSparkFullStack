@@ -1,7 +1,7 @@
 from flask import Blueprint, request, abort, Response
 from src.auth.dependencies import get_user_id
 from src.employers.orm import EmployersORM
-from src.employers.schemas import CreateEmployerSchema
+from src.schemas.schemas import CreateEmployerSchema
 
 
 blueprint = Blueprint("Employers", __name__, url_prefix="/employers")

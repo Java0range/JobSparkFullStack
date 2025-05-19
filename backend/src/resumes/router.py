@@ -1,6 +1,6 @@
 from flask import Blueprint, request, abort, Response
 from src.resumes.orm import ResumeORM
-from src.resumes.schemas import CreateResumeSchema
+from src.schemas.schemas import CreateResumeSchema
 from src.auth.dependencies import get_user_id
 
 

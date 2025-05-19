@@ -34,22 +34,22 @@ class AsyncORM:
             email="",
             telegram_username="@username"
         )
-        await ResumeORM.insert_resume(
-            user_id=1,
-            name="Root",
-            surname="Toor",
-            job_name="FastApi Backend Developer",
-            description="A FastAPI Python Backend Developer",
-            education="Высшее",
-            educational_institution="ВГУ",
-            faculty="ПММ",
-            experience=2,
-            expected_salary=80_000,
-            city="London",
-            phone_number="89004033340",
-            email="obmanaNet@main.ru",
-            telegram_username=""
-        )
+        # await ResumeORM.insert_resume(
+        #     user_id=1,
+        #     name="Root",
+        #     surname="Toor",
+        #     job_name="FastApi Backend Developer",
+        #     description="A FastAPI Python Backend Developer",
+        #     education="Высшее",
+        #     educational_institution="ВГУ",
+        #     faculty="ПММ",
+        #     experience=2,
+        #     expected_salary=80_000,
+        #     city="London",
+        #     phone_number="89004033340",
+        #     email="obmanaNet@main.ru",
+        #     telegram_username=""
+        # )
 
     @staticmethod
     async def insert_employers():
@@ -65,15 +65,15 @@ class AsyncORM:
             telegram_username="",
             city="Москва"
         )
-        await EmployersORM.insert_employer(
-            name="Backend Developer",
-            user_id=1,
-            salary=80_000,
-            work_experience=3,
-            remotely=True,
-            description="Нам нужен python backend developer",
-            phone_number="89777777777",
-            email="razwodka@mail.ru",
-            telegram_username="@razwodka",
-            city="Воронеж"
-        )
+        # await EmployersORM.insert_employer(
+        #     name="Backend Developer",
+        #     user_id=1,
+        #     salary=80_000,
+        #     work_experience=3,
+        #     remotely=True,
+        #     description="Нам нужен python backend developer",
+        #     phone_number="89777777777",
+        #     email="razwodka@mail.ru",
+        #     telegram_username="@razwodka",
+        #     city="Воронеж"
+        # )

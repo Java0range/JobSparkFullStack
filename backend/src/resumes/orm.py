@@ -2,7 +2,7 @@ from sqlalchemy import select, func
 from sqlalchemy.orm import selectinload
 from src.resumes.models import ResumesModel
 from src.database.database import async_session_factory
-from src.resumes.schemas import ResumesRespSchema
+from src.schemas.schemas import ResumesRespSchema
 
 
 class ResumeORM:

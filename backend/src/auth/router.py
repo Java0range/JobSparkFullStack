@@ -136,11 +136,3 @@ async def get_all_users():
         return await UsersORM.get_all_users()
     else:
         abort(Response("Not Enough Rights", 403))
-#
-#
-# @blueprint.route("", methods=["DELETE"])
-# async def delete_user(user_id: int = Depends(get_user_id), token: str = Depends(get_access_token)):
-#     if await check_user_auth(token):
-#         await UsersORM.delete_user(user_id)
-#     else:
-#         raise HTTPException(status_code=status.HTTP_403_FORBIDDEN, detail="Not Enough Rights")
