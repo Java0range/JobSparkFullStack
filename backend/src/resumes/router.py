@@ -38,14 +38,16 @@ async def create_resume():
     if not user_id:
         abort(Response("Invalid user id", 406))
     if (input_json.name
+        and user_id
         and input_json.surname
         and input_json.job_name
         and input_json.education
         and input_json.edu_institution
         and input_json.city
     ):
-        await ResumeORM.insert_resume(
+        ans = await ResumeORM.insert_resume(
             name=input_json.name,
+            user_id=user_id,
             surname=input_json.surname,
             job_name=input_json.job_name,
             description=input_json.description,
@@ -59,5 +61,7 @@ async def create_resume():
             email=input_json.email,
             telegram_username=input_json.telegram_username
         )
-        return "ok"
+        if ans is None:
+            return "ok"
+        abort(Response(ans, 406))
     abort(Response("Bad request", 400))

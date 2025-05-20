@@ -59,6 +59,11 @@ class EmployersORM:
             city: str
     ):
         async with async_session_factory() as session:
+            user_employers = select(EmployerModel).filter_by(user_id=user_id)
+            user_employer = await session.execute(user_employers)
+            user_employer = user_employer.scalars().all()
+            if user_employer:
+                return "Error: User Can Have Only One Employer"
             employer = EmployerModel(
                 name=name,
                 user_id=user_id,

@@ -1,4 +1,5 @@
 from pydantic import BaseModel
+from typing import Optional
 
 
 class UserEmployerSchema(BaseModel):
@@ -34,8 +35,8 @@ class UserResumeSchema(BaseModel):
 class UserResponseSchema(BaseModel):
     id: int
     username: str
-    resume: UserResumeSchema
-    employer: UserEmployerSchema
+    resume: Optional[UserResumeSchema] = None
+    employer: Optional[UserEmployerSchema] = None
 
 
 class UserLiteResponseSchema(BaseModel):

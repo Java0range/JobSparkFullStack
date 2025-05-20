@@ -42,10 +42,11 @@ async def create_employer():
     if (
         input_json.name
         and input_json.city
+        and user_id
     ):
-        await EmployersORM.insert_employer(
+        ans = await EmployersORM.insert_employer(
             name=input_json.name,
-            user_id=1,
+            user_id=user_id,
             salary=input_json.salary,
             work_experience=input_json.work_experience,
             remotely=input_json.remotely,
@@ -55,5 +56,7 @@ async def create_employer():
             email=input_json.email,
             telegram_username=input_json.telegram_username
         )
-        return "ok"
+        if ans is None:
+            return "ok"
+        abort(Response(ans, 406))
     abort(Response("Bad request", 400))

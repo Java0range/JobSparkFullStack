@@ -1,5 +1,4 @@
 from flask import Blueprint, make_response, request, Request, abort, Response
-from flask_cors import CORS
 from src.auth.orm import UsersORM
 from src.auth.dependencies import get_access_token, get_refresh_token, get_user_id
 from src.auth.AuthJWT import security
@@ -80,8 +79,9 @@ async def registration():
     if not password_is_valid is True:
         abort(Response(password_is_valid, 406))
     create_user_ans = await UsersORM.insert_user(username=username, password=password)
-    if "Ошибка" in create_user_ans:
-        abort(Response(create_user_ans, 406))
+    if create_user_ans is str:
+        if "Ошибка" in create_user_ans:
+            abort(Response(create_user_ans, 406))
     res = make_response(create_user_ans)
     res.set_cookie(
         key="access_token",
@@ -128,11 +128,3 @@ async def is_auth_user():
         "user": user
     }
     return json
-
-
-@blueprint.route("", methods=["GET"])
-async def get_all_users():
-    if await check_user_auth(request):
-        return await UsersORM.get_all_users()
-    else:
-        abort(Response("Not Enough Rights", 403))

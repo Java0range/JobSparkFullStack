@@ -59,6 +59,11 @@ class ResumeORM:
             telegram_username: str
     ):
         async with async_session_factory() as session:
+            user_resumes = select(ResumesModel).filter_by(user_id=user_id)
+            user_resumes = await session.execute(user_resumes)
+            user_resumes = user_resumes.scalars().all()
+            if user_resumes:
+                return "Error: User Can Have Only One Resume"
             resume = ResumesModel(
                 user_id=user_id,
                 name=name,
