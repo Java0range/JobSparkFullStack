@@ -8,3 +8,8 @@ export interface UserResponse {
   resume: UserResumeResponse | null,
   employer: UserEmployersModel | null
 }
+
+export interface LiteUserResponse {
+  id: number,
+  username: string
+}

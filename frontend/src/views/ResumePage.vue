@@ -60,19 +60,21 @@ onMounted(async () => {
         </div>
       </header>
       <div class="flex justify-center w-full mt-12">
-        <div class="flex flex-col items-center w-1/2 rounded-2xl border-2 border-gray-300 p-7 shadow-[0_0_20px_rgb(255,255,255)] shadow-sky-500 transition duration-310 bg-white">
-          <div class="flex items-center gap-1 justify-start w-full">
+        <div class="flex flex-col items-center w-1/2 max-lg:w-2/3 max-md:w-8/9 max-sm:w-full rounded-2xl border-2 border-gray-300 p-7 shadow-[0_0_20px_rgb(255,255,255)] shadow-sky-500 transition duration-310 bg-white">
+          <div class="flex items-center gap-1 justify-start max-sm:justify-center w-full">
             <img src="/user.svg" alt="user" class="h-12">
             <h3 class="text-2xl font-bold">{{ resume.surname }}</h3>
             <h3 class="text-2xl font-bold">{{ resume.name }}</h3>
           </div>
-          <div class="flex items-center justify-start gap-3 w-full mt-3">
+          <div class="flex max-sm:flex-col items-center justify-start gap-3 w-full mt-3">
             <h3 class="font-bold text-xl">{{ resume.job_name }}</h3>
-            <div class="p-1 px-2 bg-slate-200 rounded-lg">
-              <p class="text-sm text-slate-600">{{ resume.experience > 0 ? `Стаж: ${resume.experience} г.` : "Без опыта"}}</p>
-            </div>
-            <div class="p-1 px-2 bg-slate-200 rounded-lg">
-              <p class="text-sm text-slate-600">{{ resume.expected_salary > 0 ? `От: ${resume.expected_salary} ₽` : "Зп не указана"}}</p>
+            <div class="flex items-center gap-2">
+              <div class="p-1 px-2 bg-slate-200 rounded-lg">
+                <p class="text-sm text-slate-600">{{ resume.experience > 0 ? `Стаж: ${resume.experience} г.` : "Без опыта"}}</p>
+              </div>
+              <div class="p-1 px-2 bg-slate-200 rounded-lg">
+                <p class="text-sm text-slate-600">{{ resume.expected_salary > 0 ? `От: ${resume.expected_salary} ₽` : "Зп не указана"}}</p>
+              </div>
             </div>
           </div>
           <div class="flex items-center justify-start gap-3 w-full mt-3">

@@ -15,7 +15,6 @@ const router = useRouter()
     <div class="flex flex-col items-start w-full gap-2">
       <div class="flex items-center justify-between w-full gap-1">
         <h3 class="font-bold text-xl">{{ resumeInfo.job_name }}</h3>
-        <img src="/yellow_star.svg" alt="star" class="h-6 opacity-70 hover:-translate-y-1 hover:opacity-100 transition duration-200" />
       </div>
       <div class="flex items-center gap-4">
         <p> {{ resumeInfo.expected_salary }} ₽ за месяц</p>

@@ -18,7 +18,7 @@ async def main():
 
 app = Flask(__name__)
 
-CORS(app, supports_credentials=True, origins=["http://localhost:5173"])
+CORS(app, supports_credentials=True, origins=["*"]) # ["http://localhost:5173"])
 
 asgi_app = WsgiToAsgi(app)
 app.register_blueprint(auth_blueprint)

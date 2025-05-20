@@ -1,4 +1,4 @@
-import type { UserResponse } from '@/models/UserResponse.ts'
+import type { LiteUserResponse } from '@/models/UserResponse.ts'
 
 export interface ResumeResponse {
   id: number,
@@ -15,7 +15,7 @@ export interface ResumeResponse {
   phone_number: string,
   email: string,
   telegram_username: string,
-  user: UserResponse
+  user: LiteUserResponse
 }
 
 

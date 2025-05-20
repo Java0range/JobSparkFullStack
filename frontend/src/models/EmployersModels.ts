@@ -1,4 +1,4 @@
-import type { UserResponse } from '@/models/UserResponse.ts'
+import type { LiteUserResponse } from '@/models/UserResponse.ts'
 
 export interface EmployersModel {
   city: string,
@@ -11,7 +11,7 @@ export interface EmployersModel {
   salary: number,
   telegram_username: string,
   work_experience: number,
-  user: UserResponse
+  user: LiteUserResponse
 }
 
 

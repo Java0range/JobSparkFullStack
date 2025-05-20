@@ -1,4 +1,11 @@
 <script setup lang="ts">
+import { ref } from 'vue'
+
+const search = ref<string>("");
+
+defineProps<{
+  searchClicked: (search: string) => void,
+}>();
 
 </script>
 
@@ -13,11 +20,12 @@
         <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
       </svg>
       <input
+        v-model="search"
         type="text"
         placeholder="Профессия, Должность..."
         class="w-full bg-transparent text-black px-4 py-3 focus:outline-none placeholder-gray-400"
       />
-      <button class="px-6 py-3 bg-sky-500 hover:bg-sky-400 text-white rounded-full transition-colors">
+      <button @click="searchClicked(search)" class="px-6 py-3 bg-sky-500 hover:bg-sky-400 text-white rounded-full transition-colors">
         Найти
       </button>
     </div>

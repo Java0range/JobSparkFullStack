@@ -63,19 +63,15 @@ onMounted(() => {
 <template>
   <CreateResumeDrawer v-if="createResumeDrawer" :update-user-info="updateUserInfo" :close-drawer="closeResumeDrawer" />
   <CreateEmployerDrawer v-if="createEmployerDrawer" :update-user-info="updateUserInfo" :close-drawer="closeEmployerDrawer" />
-  <div class="bg-white w-3/5 m-auto rounded-xl shadow-[0_0_25px_rgb(255,255,255)] shadow-sky-500 mt-20">
+  <div class="bg-white w-3/5 max-lg:w-4/5 max-md:w-8/9 max-sm:w-full m-auto rounded-xl shadow-[0_0_25px_rgb(255,255,255)] shadow-sky-500 mt-20">
     <header class="flex justify-between border-b border-slate-200 px-10 py-8">
       <div class="flex items-center gap-2">
         <img src="/user.svg" alt="user" class="h-8">
         <h2 class="font-bold text-xl">{{ username }}</h2>
       </div>
-      <ul class="flex items-center gap-10">
+      <ul class="flex max-sm:flex-col max-sm:gap-3 items-center gap-10">
         <li @click="router.push({ path: '/' })" class="flex items-center gap-3 cursor-pointer hover:-translate-y-1 transition duration-200">
           <span>На главную</span>
-        </li>
-        <li class="flex items-center gap-1 cursor-pointer hover:-translate-y-1 transition duration-200">
-          <span>Избранное</span>
-          <img src="/yellow_star.svg" alt="star" class="h-5">
         </li>
         <li @click="logout" class="flex items-center gap-1 cursor-pointer hover:-translate-y-1 transition duration-200">
           <span>Выйти</span>
@@ -83,7 +79,7 @@ onMounted(() => {
         </li>
       </ul>
     </header>
-    <div class="p-10">
+    <div class="max-md:p-5 p-10">
       <div class="flex flex-col items-start mb-10">
         <h1 class="text-3xl font-bold mb-3">Резюме:</h1>
         <UserResumeCart v-if="userResume" :user-resume="userResume" />
