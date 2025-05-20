@@ -4,7 +4,8 @@ import { ref } from 'vue'
 import EmployersService from '@/services/EmployersService.ts'
 
 const props = defineProps<{
-  closeDrawer: () => void
+  closeDrawer: () => void,
+  updateUserInfo: () => void
 }>();
 
 const resumeCreateSteps = ref<number>(1);
@@ -47,6 +48,7 @@ const createEmployer = async () => {
     const data = await EmployersService.createEmployer(json);
     if (data.data === "ok") {
       createEmployerDisable.value = false;
+      props.updateUserInfo();
       props.closeDrawer();
     }
   } catch (err) {

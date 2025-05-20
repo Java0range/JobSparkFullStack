@@ -11,10 +11,10 @@ export const useUserStore = defineStore('user', () => {
     return userInfo.value?.username || ''
   }
   const getUserResume = () => {
-    return userInfo.value?.resume
+    return userInfo.value?.resume || null
   }
   const getUserEmployer = () => {
-    return userInfo.value?.employer
+    return userInfo.value?.employer || null
   }
   return { userInfo, logout, getUsername, getUserResume, getUserEmployer }
 })

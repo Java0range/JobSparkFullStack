@@ -4,7 +4,8 @@ import { ref } from 'vue'
 import ResumeService from '@/services/ResumeService.ts'
 
 const props = defineProps<{
-  closeDrawer: () => void
+  closeDrawer: () => void,
+  updateUserInfo: () => void
 }>();
 
 const resumeCreateSteps = ref<number>(1);
@@ -59,6 +60,7 @@ const createResume = async () => {
     const data = await ResumeService.createResume(json);
     if (data.data === "ok") {
       createResumeDisable.value = false;
+      props.updateUserInfo();
       props.closeDrawer();
     }
   } catch (err) {

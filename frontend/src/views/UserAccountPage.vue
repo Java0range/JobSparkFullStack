@@ -14,35 +14,9 @@ const userStore = useUserStore()
 
 const username = ref<string>("");
 
-const userResume = ref<UserResumeResponse>({
-  "city": "",
-  "description": "",
-  "education": "",
-  "educational_institution": "",
-  "email": "",
-  "expected_salary": 0,
-  "experience": 0,
-  "faculty": "",
-  "id": 0,
-  "job_name": "",
-  "name": "",
-  "phone_number": "",
-  "surname": "",
-  "telegram_username": ""
-});
+const userResume = ref<UserResumeResponse | null>(null);
 
-const userEmployer = ref<UserEmployersModel>({
-  "city": "",
-  "description": "",
-  "email": "",
-  "id": 0,
-  "name": "",
-  "phone_number": "",
-  "remotely": false,
-  "salary": 0,
-  "telegram_username": "",
-  "work_experience": 0
-});
+const userEmployer = ref<UserEmployersModel | null>(null);
 
 const router = useRouter();
 
@@ -64,6 +38,19 @@ const logout = async () => {
   await router.push('/');
 }
 
+const updateUserInfo = async () => {
+  try {
+    const data = await AuthService.isAuthenticated();
+    if (data.data.auth) {
+      userStore.userInfo = data.data.user;
+      userResume.value = userStore.getUserResume();
+      userEmployer.value = userStore.getUserEmployer();
+    }
+  } catch (err) {
+    console.log(err)
+  }
+}
+
 onMounted(() => {
   console.log(userStore.userInfo)
   username.value = userStore.getUsername();
@@ -74,8 +61,8 @@ onMounted(() => {
 </script>
 
 <template>
-  <CreateResumeDrawer v-if="createResumeDrawer" :close-drawer="closeResumeDrawer" />
-  <CreateEmployerDrawer v-if="createEmployerDrawer" :close-drawer="closeEmployerDrawer" />
+  <CreateResumeDrawer v-if="createResumeDrawer" :update-user-info="updateUserInfo" :close-drawer="closeResumeDrawer" />
+  <CreateEmployerDrawer v-if="createEmployerDrawer" :update-user-info="updateUserInfo" :close-drawer="closeEmployerDrawer" />
   <div class="bg-white w-3/5 m-auto rounded-xl shadow-[0_0_25px_rgb(255,255,255)] shadow-sky-500 mt-20">
     <header class="flex justify-between border-b border-slate-200 px-10 py-8">
       <div class="flex items-center gap-2">
@@ -99,15 +86,15 @@ onMounted(() => {
     <div class="p-10">
       <div class="flex flex-col items-start mb-10">
         <h1 class="text-3xl font-bold mb-3">Резюме:</h1>
-        <UserResumeCart v-if="userResume.id != 0" :user-resume="userResume" />
-        <button v-if="userResume.id === 0" @click="createResumeDrawer = true" class="min-w-36 max-sm:min-w-12 bg-sky-500 hover:bg-sky-400 text-white font-bold py-2 px-4 rounded-xl transition-all">
+        <UserResumeCart v-if="userResume" :user-resume="userResume" />
+        <button v-if="!userResume" @click="createResumeDrawer = true" class="min-w-36 max-sm:min-w-12 bg-sky-500 hover:bg-sky-400 text-white font-bold py-2 px-4 rounded-xl transition-all">
           Создать резюме
         </button>
       </div>
       <div class="flex flex-col items-start mb-10">
         <h1 class="text-3xl font-bold mb-3">Вакансия:</h1>
-        <UserEmployerCart v-if="userEmployer.id != 0" :user-employer="userEmployer" />
-        <button v-if="userEmployer.id === 0" @click="createEmployerDrawer = true" class="min-w-36 max-sm:min-w-12 bg-sky-500 hover:bg-sky-400 text-white font-bold py-2 px-4 rounded-xl transition-all">
+        <UserEmployerCart v-if="userEmployer" :user-employer="userEmployer" />
+        <button v-if="!userEmployer" @click="createEmployerDrawer = true" class="min-w-36 max-sm:min-w-12 bg-sky-500 hover:bg-sky-400 text-white font-bold py-2 px-4 rounded-xl transition-all">
           Создать вакансию
         </button>
       </div>

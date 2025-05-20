@@ -26,7 +26,7 @@ const loginUser = async () => {
       await router.push({ path: "/me" });
     }
   } catch (err: any) {
-    if (err.response.status === 406) {
+    if (err.response.status === 406 || 401) {
       errorTitle.value = err.response.data;
       errorFlag.value = true;
     } else {

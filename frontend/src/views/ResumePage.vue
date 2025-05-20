@@ -91,7 +91,7 @@ onMounted(async () => {
                 <p class="text-lg">Учреждение:</p>
                 <p class="text-lg text-sky-500">{{ resume.educational_institution }}</p>
               </div>
-              <div class="flex items-center gap-1 mt-1">
+              <div v-if="resume.faculty" class="flex items-center gap-1 mt-1">
                 <p class="text-lg">Факультет:</p>
                 <p class="text-lg text-sky-500">{{ resume.faculty }}</p>
               </div>

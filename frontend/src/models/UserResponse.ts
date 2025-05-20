@@ -5,6 +5,6 @@ import type { UserEmployersModel } from '@/models/EmployersModels.ts'
 export interface UserResponse {
   id: number,
   username: string,
-  resume: UserResumeResponse,
-  employer: UserEmployersModel
+  resume: UserResumeResponse | null,
+  employer: UserEmployersModel | null
 }
