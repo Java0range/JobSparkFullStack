@@ -3,9 +3,6 @@ import type { CreateResume, ResumeResponse } from '@/models/ResumeModels.ts'
 import $api from '@/http'
 
 export default class ResumeService {
-  static async createResume(json: CreateResume): Promise<AxiosResponse<string>> {
-    return await $api.post<string>("/resumes", json)
-  }
   static async fetchResumes(
     city: string,
     words: string | undefined,
@@ -38,6 +35,12 @@ export default class ResumeService {
       }
     }
     return $api.get<ResumeResponse[]>("/resumes" + filter)
+  }
+  static async createResume(json: CreateResume): Promise<AxiosResponse<string>> {
+    return await $api.post<string>("/resumes", json)
+  }
+  static async updateResume(json: CreateResume): Promise<AxiosResponse<string>> {
+    return await $api.put<string>("/resumes", json)
   }
   static async fetchResume(id: string | string[]): Promise<AxiosResponse<ResumeResponse>> {
     return $api.get<ResumeResponse>(`/resumes/${id}`)

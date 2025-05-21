@@ -49,6 +49,10 @@ export default class EmployersService {
     return $api.post<string>("/employers", json)
   }
 
+  static async updateEmployer(json: CreateEmployer): Promise<AxiosResponse<string>> {
+    return $api.put<string>("/employers", json)
+  }
+
   static async fetchEmployer(id: string | string[]): Promise<AxiosResponse<EmployersModel>> {
     return $api.get<EmployersModel>("/employers/" + id)
   }

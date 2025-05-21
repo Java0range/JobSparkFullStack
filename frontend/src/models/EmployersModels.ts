@@ -33,7 +33,7 @@ export interface CreateEmployer {
   name: string,
   salary: number,
   work_experience: number,
-  remotely: boolean,
+  remotely: boolean | null,
   description: string,
   city: string,
   phone_number: string,
