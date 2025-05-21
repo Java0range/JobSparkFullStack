@@ -78,3 +78,40 @@ class EmployersORM:
             )
             session.add(employer)
             await session.commit()
+
+    @staticmethod
+    async def update_employer(
+            name: str,
+            user_id: int,
+            salary: int,
+            work_experience: int,
+            remotely: bool | None,
+            description: str,
+            phone_number: str,
+            email: str,
+            telegram_username: str,
+            city: str
+    ):
+        async with async_session_factory() as session:
+            query = select(EmployerModel).filter_by(user_id=user_id)
+            employer = await session.execute(query)
+            employer = employer.scalars().first()
+            if name:
+                employer.name = name
+            if salary != -1:
+                employer.salary = salary
+            if work_experience != -1:
+                employer.work_experience = work_experience
+            if remotely is not None:
+                employer.remotely = remotely
+            if description:
+                employer.description = description
+            if city:
+                employer.city = city
+            if phone_number:
+                employer.phone_number = phone_number
+            if email:
+                employer.email = email
+            if telegram_username:
+                employer.telegram_username = telegram_username
+            await session.commit()

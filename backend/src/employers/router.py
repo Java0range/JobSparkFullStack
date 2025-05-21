@@ -60,3 +60,25 @@ async def create_employer():
             return "ok"
         abort(Response(ans, 406))
     abort(Response("Bad request", 400))
+
+
+@blueprint.route("", methods=["PUT"])
+async def update_employer():
+    data = request.json
+    input_json = CreateEmployerSchema.model_validate(data)
+    user_id = await get_user_id(request)
+    if not user_id:
+        abort(Response("Invalid user id", 406))
+    await EmployersORM.update_employer(
+        name=input_json.name,
+        user_id=user_id,
+        salary=input_json.salary,
+        work_experience=input_json.work_experience,
+        remotely=input_json.remotely,
+        description=input_json.description,
+        city=input_json.city,
+        phone_number=input_json.phone_number,
+        email=input_json.email,
+        telegram_username=input_json.telegram_username
+    )
+    return "ok"

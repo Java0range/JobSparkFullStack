@@ -82,3 +82,52 @@ class ResumeORM:
             )
             session.add(resume)
             await session.commit()
+
+    @staticmethod
+    async def update_resume(
+            user_id: int,
+            name: str,
+            surname: str,
+            job_name: str,
+            description: str,
+            experience: int,
+            education: str,
+            educational_institution: str,
+            faculty: str,
+            expected_salary: int,
+            city: str,
+            phone_number: str,
+            email: str,
+            telegram_username: str
+    ):
+        async with async_session_factory() as session:
+            query = select(ResumesModel).filter_by(user_id=user_id)
+            resume = await session.execute(query)
+            resume = resume.scalars().first()
+            if name:
+                resume.name = name
+            if surname:
+                resume.surname = surname
+            if job_name:
+                resume.job_name = job_name
+            if description:
+                resume.description = description
+            if experience != -1:
+                resume.experience = experience
+            if education:
+                resume.education = education
+            if educational_institution:
+                resume.educational_institution = educational_institution
+            if faculty:
+                resume.faculty = faculty
+            if expected_salary != -1:
+                resume.expected_salary = expected_salary
+            if city:
+                resume.city = city
+            if phone_number:
+                resume.phone_number = phone_number
+            if email:
+                resume.email = email
+            if telegram_username:
+                resume.telegram_username = telegram_username
+            await session.commit()

@@ -96,7 +96,7 @@ class CreateEmployerSchema(BaseModel):
     name: str
     salary: int
     work_experience: int
-    remotely: bool
+    remotely: bool | None
     description: str
     city: str
     phone_number: str

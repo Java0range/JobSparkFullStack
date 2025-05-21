@@ -65,3 +65,29 @@ async def create_resume():
             return "ok"
         abort(Response(ans, 406))
     abort(Response("Bad request", 400))
+
+
+@blueprint.route("", methods=["PUT"])
+async def update_resume():
+    data = request.json
+    input_json = CreateResumeSchema.model_validate(data)
+    user_id = await get_user_id(request)
+    if not user_id:
+        abort(Response("Invalid user id", 406))
+    await ResumeORM.update_resume(
+        name=input_json.name,
+        user_id=user_id,
+        surname=input_json.surname,
+        job_name=input_json.job_name,
+        description=input_json.description,
+        education=input_json.education,
+        experience=input_json.experience,
+        educational_institution=input_json.edu_institution,
+        faculty=input_json.faculty,
+        expected_salary=input_json.expected_salary,
+        city=input_json.city,
+        phone_number=input_json.phone_number,
+        email=input_json.email,
+        telegram_username=input_json.telegram_username
+    )
+    return "ok"
