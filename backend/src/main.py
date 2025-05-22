@@ -18,7 +18,7 @@ async def main():
 
 app = Flask(__name__)
 
-CORS(app, supports_credentials=True, origins=["http://localhost:5173"])
+CORS(app, supports_credentials=True, origins=["https://jobspark.cloudpub.ru", "http://localhost:5173"])
 
 asgi_app = WsgiToAsgi(app)
 app.register_blueprint(auth_blueprint)
@@ -27,5 +27,7 @@ app.register_blueprint(employers_blueprint)
 
 
 if __name__ == '__main__':
+    # следующая строка это первоначальная настройка db, ТОЛЛЬКО ПЕРВЫЙ ЗАПУСК обязательно производить с этой строкой.
+    # после запуска перезапустить без этой строки и пользоваться
     # asyncio_run(main())
     uvicorn_run(asgi_app, host='0.0.0.0', port=8000)
