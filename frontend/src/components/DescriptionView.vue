@@ -3,7 +3,7 @@
     <div class="flex items-center justify-center w-full border-b border-sky-500">
       <h3 class="text-lg mb-1">Описание:</h3>
     </div>
-    <div class="flex items-center justify-start w-full mt-3">
+    <div class="flex items-center justify-start w-full mt-3 overflow-auto">
       <div class="font-mono whitespace-pre-wrap wrap-break-word">
         <pre v-html="internalDescription"></pre>
       </div>

@@ -1,6 +1,6 @@
 import axios, { type AxiosResponse } from 'axios'
 
-const baseURL = "http://localhost/api";
+const baseURL = "https://jobspark.cloudpub.ru/api";
 
 const $api = axios.create({
   withCredentials: true,

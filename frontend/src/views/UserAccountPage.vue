@@ -129,7 +129,7 @@ onMounted(() => {
       <div class="flex flex-col items-start mb-10">
         <div class="flex items-center gap-2 mb-3">
           <h1 class="text-3xl font-bold">Резюме:</h1>
-          <div @click="updateResumeDrawer = true" class="flex items-center justify-center p-1 rounded-lg border-2 border-slate-300 hover:bg-slate-100">
+          <div v-if="userResume" @click="updateResumeDrawer = true" class="flex items-center justify-center p-1 rounded-lg border-2 border-slate-300 hover:bg-slate-100">
             <img src="/edit.svg" alt="edit" class="h-5">
           </div>
         </div>
@@ -141,7 +141,7 @@ onMounted(() => {
       <div class="flex flex-col items-start mb-10">
         <div class="flex items-center gap-2 mb-3">
           <h1 class="text-3xl font-bold">Вакансия:</h1>
-          <div @click="updateEmployerDrawer = true" class="flex items-center justify-center p-1 rounded-lg border-2 border-slate-300 hover:bg-slate-100">
+          <div v-if="userEmployer" @click="updateEmployerDrawer = true" class="flex items-center justify-center p-1 rounded-lg border-2 border-slate-300 hover:bg-slate-100">
             <img src="/edit.svg" alt="edit" class="h-5">
           </div>
         </div>
