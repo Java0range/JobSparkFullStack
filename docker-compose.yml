@@ -10,6 +10,8 @@ services:
       POSTGRES_DB: JobSpark
     networks:
       - dev
+    depends_on:
+      - frontend
 
   nginx:
     image: nginx:stable-alpine
@@ -28,11 +30,11 @@ services:
       context: ./backend
     networks:
       - dev
+    depends_on:
+      - frontend
 
   frontend:
     build:
       context: ./frontend
-    depends_on:
-      - backend
     networks:
       - dev
