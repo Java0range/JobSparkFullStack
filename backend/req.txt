@@ -1,3 +1,4 @@
+annotated-types==0.7.0
 asgiref==3.8.1
 asyncpg==0.30.0
 bcrypt==4.3.0
