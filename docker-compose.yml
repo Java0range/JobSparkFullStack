@@ -38,3 +38,12 @@ services:
       context: ./frontend
     networks:
       - dev
+
+  cloudpub:
+    image: cloudpub/cloudpub:latest
+    network_mode: "host"
+    environment:
+      - TOKEN=ZwJw3a4YMSSqHzgygeAbp5tSIwfJq67WMJtv__E9FBg
+    stdin_open: true
+    tty: true
+    command: publish http 80
